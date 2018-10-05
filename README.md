@@ -13,8 +13,8 @@ PRINT_FLAG            =  1
 ### Functions:
   * `func GetHostName() string` is like *gethosname()* function in **unistd.h**, returns the hostname.
   * `func GetOSName() (string, string)` returns *GOOS* and *GOARCH* variables as strings.
-  * `func GetSysInfo () sys_t` is like *sysinfo()* in **sys/sysinfo.h**, returns system information as sys_t type.
-  * `func GetCPUInfo () []cpu.InfoStat`is like *sysinfo* in **sys/sysinfo.h**, returns the cpu information in */proc/cpuinfo*.  If `PRINT_FLAG != 0` then print all CPUs info. 
+  * `func GetSysInfo() sys_t` is like *sysinfo()* in **sys/sysinfo.h**, returns system information as sys_t type.
+  * `func GetCPUInfo() []cpu.InfoStat`is like *sysinfo* in **sys/sysinfo.h**, returns the cpu information in */proc/cpuinfo*.  If `PRINT_FLAG != 0` then print all CPUs info. 
   * `func GetNetworkInterface() []net.Interface` is like *ifconfig*, returns the network interfaces of */sys/class/net* 
   
 ### References:
