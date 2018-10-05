@@ -12,7 +12,7 @@ import (
 const (
 	SYSINFO_LOADS_SCALE   =  1<<16; // 2^16 
 	SYSINFO_MEM_UNIT      =  1024 * 1024; // MB
-	PRINT_FLAG            =  0
+	PRINT_FLAG            =  1 // complete (or partial) print
 )
 
 // sys_t is go version of  "sysinfo" struct,
@@ -32,8 +32,8 @@ type sys_t struct {
 	FreeHigh  uint64     // Available high memory size
 }
 
-// like gethosname() function in unistd.h, returns the hostname.
-func getHostName() string{
+// like Gethosname() function in unistd.h, returns the hostname.
+func GetHostName() string{
 
 	hostN, err := os.Hostname();
 	if (err != nil) {
@@ -47,7 +47,7 @@ func getHostName() string{
 }
 
 // return GOOS and GOARCH variables as strings.
-func getOSName() (string, string) {
+func GetOSName() (string, string) {
 
 	// Print:
 	fmt.Printf("OS name:\t%v\n", runtime.GOOS);
@@ -57,7 +57,7 @@ func getOSName() (string, string) {
 }
 
 // like sysinfo() in sys/sysinfo.h, returns system information as sys_t type.
-func getSysInfo () sys_t {
+func GetSysInfo () sys_t {
 	
 	sys_obj := sys_t{};
 	sys_ref := &syscall.Sysinfo_t{}
@@ -97,8 +97,9 @@ func getSysInfo () sys_t {
 }
 
 // like sysinfo in sys/sysinfo.h, returns the cpu information in /proc/cpuinfo
+// NOTE: if PRINT_FLAG != 0 then print all CPUs info. 
 // Reference: https://github.com/shirou/gopsutil
-func getCPUInfo () []cpu.InfoStat {
+func GetCPUInfo () []cpu.InfoStat {
 
 	var cpu_info []cpu.InfoStat;
 	cpu_info, err := cpu.Info()
@@ -133,7 +134,7 @@ func getCPUInfo () []cpu.InfoStat {
 
 // like ifconfig, returns the network interfaces of /sys/class/net
 // Reference:  https://golang.org/pkg/net/
-func getNetworkInterface() []net.Interface{
+func GetNetworkInterface() []net.Interface{
 
 	var iface []net.Interface;
 	iface, err := net.Interfaces();
@@ -151,9 +152,9 @@ func getNetworkInterface() []net.Interface{
 }
 
 func main () {
-	getHostName();
-	getNetworkInterface();
-	getOSName();
-	getSysInfo();
-	getCPUInfo();
+	GetHostName();
+	GetNetworkInterface();
+	GetOSName();
+	GetSysInfo();
+	GetCPUInfo();
 }
